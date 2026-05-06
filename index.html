@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SwiftI2V: Efficient High-Resolution Image-to-Video Generation via Conditional Segment-wise Generation</title>
+<meta name="description" content="SwiftI2V: a 2K image-to-video generation framework that is 202x faster than end-to-end baselines and runs on a single consumer GPU (RTX 4090)." />
+<meta name="keywords" content="image-to-video, video generation, diffusion, high-resolution, 2K, efficient, SwiftI2V" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="SwiftI2V: Efficient High-Resolution Image-to-Video Generation" />
+<meta property="og:description" content="2K I2V at 202x less GPU-time. Runs on a single RTX 4090 (24GB)." />
+<meta property="og:type" content="website" />
+
+<!-- Bulma CSS (used by Nerfies-style academic page templates) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+<!-- FontAwesome for icons -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+<!-- Academic icons (arXiv, HF, etc.) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700;800&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="./static/css/style.css" />
+</head>
+
+<body>
+
+<!-- ====================== HERO ====================== -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h1 class="title is-2 publication-title">
+        <img src="./static/images/LOGO.png" alt="SwiftI2V" class="title-logo" />
+        <span class="title-sep">:</span> Efficient High-Resolution Image-to-Video Generation
+        <br />
+        via Conditional Segment-wise Generation
+      </h1>
+
+      <div class="publication-authors">
+        <span class="author-block">YaoYang Liu<sup>1</sup>,</span>
+        <span class="author-block">Yuechen Zhang<sup>2</sup>,</span>
+        <span class="author-block">Wenbo Li<sup>3</sup>,</span>
+        <span class="author-block">Yufei Zhao<sup>4</sup>,</span>
+        <span class="author-block">Rui Liu<sup>5</sup>,</span>
+        <span class="author-block">Long Chen<sup>1,*</sup></span>
+      </div>
+
+      <div class="affiliations">
+        <sup>1</sup>HKUST &nbsp;·&nbsp;
+        <sup>2</sup>Xiaomi MiMo &nbsp;·&nbsp;
+        <sup>3</sup>Joy Future Academy &nbsp;·&nbsp;
+        <sup>4</sup>HKU &nbsp;·&nbsp;
+        <sup>5</sup>Celia Lab
+        <br />
+        <span style="font-size:0.85rem;">* Corresponding author</span>
+      </div>
+
+      <!-- Link buttons -->
+      <div class="publication-links">
+        <!-- arXiv (placeholder) -->
+        <span class="link-block">
+          <a href="#" class="button is-disabled" title="arXiv link will be available soon">
+            <span class="icon"><i class="ai ai-arxiv"></i></span>
+            <span>arXiv (coming soon)</span>
+          </a>
+        </span>
+
+        <!-- Code -->
+        <span class="link-block">
+          <a href="https://github.com/LazySheeeeeep/SwiftI2V" class="button" target="_blank" rel="noopener">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>Code</span>
+          </a>
+        </span>
+
+        <!-- HuggingFace (hidden for now, restore when demo is ready)
+        <span class="link-block">
+          <a href="#" class="button is-disabled" title="Hugging Face demo coming soon">
+            <span class="icon">🤗</span>
+            <span>HuggingFace (soon)</span>
+          </a>
+        </span>
+        -->
+
+        <!-- BibTeX -->
+        <span class="link-block">
+          <a href="#bibtex" class="button">
+            <span class="icon"><i class="fas fa-quote-left"></i></span>
+            <span>BibTeX</span>
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== TEASER CAROUSEL ====================== -->
+<section class="section" style="padding-top:0;">
+  <div class="container is-max-desktop">
+    <div class="carousel" id="teaser-carousel" aria-label="SwiftI2V teaser videos">
+      <button class="carousel-btn carousel-prev" aria-label="Previous">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="carousel-btn carousel-next" aria-label="Next">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+      <div class="carousel-track">
+        <div class="carousel-slide is-active">
+          <video muted loop playsinline preload="metadata" autoplay
+                 data-src="./static/videos/SwiftI2V_6.mp4"></video>
+        </div>
+        <div class="carousel-slide">
+          <video muted loop playsinline preload="metadata"
+                 data-src="./static/videos/SwiftI2V_1.mp4"></video>
+        </div>
+        <div class="carousel-slide">
+          <video muted loop playsinline preload="metadata"
+                 data-src="./static/videos/SwiftI2V_12.mp4"></video>
+        </div>
+        <div class="carousel-slide">
+          <video muted loop playsinline preload="metadata"
+                 data-src="./static/videos/SwiftI2V_3.mp4"></video>
+        </div>
+        <div class="carousel-slide">
+          <video muted loop playsinline preload="metadata"
+                 data-src="./static/videos/SwiftI2V_7.mp4"></video>
+        </div>
+      </div>
+
+      <div class="carousel-dots" role="tablist"></div>
+    </div>
+
+    <p class="has-text-centered" style="margin-top:0.8rem; color:var(--text-muted); font-size:0.92rem;">
+      2K (2560&times;1408) I2V generation by SwiftI2V &mdash; 81 frames in ~111s on a single H800.
+    </p>
+  </div>
+</section>
+
+<!-- ====================== HIGHLIGHTS ====================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Highlights</h2>
+    <p class="section-subtitle">Why SwiftI2V matters</p>
+
+    <div class="highlights-grid highlights-3">
+      <div class="highlight-card">
+        <div class="highlight-number">202&times;</div>
+        <div class="highlight-label">less GPU-time than end-to-end 2K I2V baselines</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-number">2K</div>
+        <div class="highlight-label">native 2560&times;1408 resolution, 81 frames</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-number">24GB</div>
+        <div class="highlight-label">runs on a single consumer RTX 4090</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== ABSTRACT ====================== -->
+<section class="section" id="abstract">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Abstract</h2>
+    <div class="content">
+      <p>
+        Image-to-video (I2V) generation has made rapid progress, yet scaling to
+        <b>high resolution</b> (e.g., 2K) is bottlenecked by the efficiency&ndash;fidelity dilemma:
+        end-to-end high-resolution generators deliver strong quality but require tens of thousands of
+        GPU-seconds per clip, while low-resolution generation followed by video super-resolution (VSR)
+        loses the input-image condition and hallucinates details inconsistent with the reference.
+      </p>
+      <p>
+        We present <b>SwiftI2V</b>, an efficient two-stage framework that resolves this dilemma.
+        Stage&nbsp;I produces a low-resolution motion reference with a large backbone under few-step sampling;
+        Stage&nbsp;II refines it to 2K by taking both the <i>input image</i> and the Stage&nbsp;I output as
+        strong conditions. To handle long-duration 2K refinement within limited GPU memory, we introduce
+        <b>Conditional Segment-wise Generation (CSG)</b> with <i>bidirectional contextual interaction</i>,
+        which divides the temporal axis into bounded segments augmented by neighboring contexts &mdash;
+        mitigating error accumulation while retaining high-frequency fidelity. A
+        <b>stage-transition training</b> strategy further closes the train&ndash;test gap by simulating
+        Stage&nbsp;I style artifacts during Stage&nbsp;II training.
+      </p>
+      <p>
+        On VBench-I2V at 2K, SwiftI2V matches strong end-to-end baselines on key I2V metrics while reducing
+        total GPU-time by <b>202&times;</b>. Notably, it enables practical 2K I2V generation on a single
+        <b>consumer RTX 4090</b> within 24&nbsp;GB of memory.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== METHOD ====================== -->
+<section class="section" id="method">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Method</h2>
+    <p class="section-subtitle">A two-stage, segment-wise pipeline for efficient 2K I2V</p>
+
+    <!-- Main pipeline figure -->
+    <figure class="method-figure-img">
+      <img src="./static/images/method.png" alt="SwiftI2V two-stage pipeline" />
+      <figcaption>
+        <b>Overall pipeline.</b> Stage&nbsp;I generates a low-resolution motion reference with a
+        large backbone (Low-Res LoRA + Few-Step LoRA, 4-step sampling). Stage&nbsp;II refines it to 2K,
+        conditioned on both the original input image and the Stage&nbsp;I output via channel-wise concatenation.
+      </figcaption>
+    </figure>
+
+    <!-- CSG figure + explanation side-by-side -->
+    <div class="method-split">
+      <div class="method-split-figure">
+        <img src="./static/images/PSG.png" alt="Conditional Segment-wise Generation" />
+        <div class="method-split-caption">
+          <b>Conditional Segment-wise Generation (CSG)</b> with bidirectional contextual interaction.
+        </div>
+      </div>
+      <div class="method-split-text content">
+        <h3 class="title is-5">Conditional Segment-wise Generation</h3>
+        <p>
+          Stage&nbsp;II divides the clip into bounded segments (M&nbsp;=&nbsp;3 target frames with
+          N&nbsp;=&nbsp;1 neighbor contexts on each side). A segment anchor &mdash; the input image &mdash;
+          is re-injected into every segment, while <b>bidirectional</b> (not causal) attention across
+          segments suppresses drift and eliminates visible segment boundaries.
+        </p>
+        <p>
+          This design is <b>memory-bounded</b>: the peak memory stays roughly constant regardless of total
+          length, so long videos run on consumer GPUs.
+        </p>
+      </div>
+    </div>
+
+    <div class="content" style="margin-top:2rem;">
+      <h3 class="title is-5">Stage-Transition Training</h3>
+      <p>
+        During training we synthesize Stage&nbsp;I-style inputs by having Stage&nbsp;I lightly denoise
+        downsampled clips. This closes the train&ndash;test gap caused by real Stage&nbsp;I artifacts
+        (aliasing, residual noise).
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== GALLERY ====================== -->
+<section class="section" id="gallery">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">2K I2V Gallery</h2>
+    <p class="section-subtitle">Diverse subjects &mdash; human portraits, animals, landscapes, and dynamic scenes</p>
+
+    <div class="gallery-grid">
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_4.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_13.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_10.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_2.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_8.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_14.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_9.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_11.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_5.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_15.mp4"></video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== RTX 4090 ====================== -->
+<section class="section" id="rtx4090">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Running on a Consumer GPU (RTX 4090 · 24&nbsp;GB)</h2>
+    <p class="section-subtitle">
+      SwiftI2V generates 2K videos on a single RTX 4090, bringing high-resolution I2V within reach of consumer hardware.
+    </p>
+
+    <div class="gallery-grid">
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_RTX4090_1.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_RTX4090_2.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_RTX4090_3.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls data-src="./static/videos/SwiftI2V_RTX4090_4.mp4"></video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== QUALITATIVE COMPARISON ====================== -->
+<section class="section" id="comparison">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Qualitative Comparison</h2>
+    <p class="section-subtitle">
+      Side-by-side videos comparing SwiftI2V against representative baselines.
+      Zoomed-in views (~1/9 of the full frame) focus on the most challenging regions; method names are labelled in the videos.
+    </p>
+
+    <div class="full-width-video">
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls autoplay src="./static/videos/Comparison_1.mp4"></video>
+      </div>
+    </div>
+
+    <div class="full-width-video">
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls src="./static/videos/Comparison_2.mp4"></video>
+      </div>
+    </div>
+
+    <p class="has-text-centered" style="color:var(--text-muted); font-size:0.9rem;">
+      SwiftI2V preserves fine-grained details and temporal coherence where baselines show artifacts or drift.
+    </p>
+  </div>
+</section>
+
+<!-- ====================== ABLATION ====================== -->
+<section class="section" id="ablation">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Ablation Study</h2>
+    <p class="section-subtitle">
+      Visual evidence for the effect of our key designs. Variants are labelled directly in the videos.
+    </p>
+
+    <div class="ablation-grid">
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls autoplay src="./static/videos/Ablation_1.mp4"></video>
+      </div>
+      <div class="video-card">
+        <video muted loop playsinline preload="metadata" controls src="./static/videos/Ablation_2.mp4"></video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== BIBTEX ====================== -->
+<section class="section" id="bibtex">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">BibTeX</h2>
+    <div style="position:relative; max-width:820px; margin:0 auto;">
+      <button id="copy-bibtex-btn"
+              class="button is-small"
+              style="position:absolute; top:10px; right:10px; z-index:2;
+                     background:#1f6feb; color:white; border:none;">
+        Copy
+      </button>
+<pre id="bibtex-code">@article{liu2026swifti2v,
+  title   = {SwiftI2V: Efficient High-Resolution Image-to-Video Generation via Conditional Segment-wise Generation},
+  author  = {Liu, YaoYang and Zhang, Yuechen and Li, Wenbo and Zhao, Yufei and Liu, Rui and Chen, Long},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="footer">
+  <div class="container">
+    <p>
+      This project page is adapted from the
+      <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>
+      academic template. Source code licensed under
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.
+    </p>
+    <p style="margin-top:0.4rem; color:#8b949e;">
+      &copy; 2026 SwiftI2V authors.
+    </p>
+  </div>
+</footer>
+
+<script src="./static/js/main.js"></script>
+</body>
+</html>
