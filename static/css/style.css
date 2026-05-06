@@ -1,0 +1,498 @@
+/* ===== SwiftI2V Project Page Custom Styles ===== */
+
+:root {
+  --primary: #1f6feb;
+  --primary-dark: #0b4cb3;
+  --accent: #ff8c00;
+  --bg-soft: #f7f9fc;
+  --border-soft: #e4e8ef;
+  --text-muted: #606770;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Noto Sans', 'Google Sans', 'Roboto', 'Inter', -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background-color: #ffffff;
+  color: #1f2328;
+}
+
+/* ---------- Hero ---------- */
+
+.publication-title {
+  font-family: 'Google Sans', 'Noto Sans', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.swifti2v-gradient {
+  background: linear-gradient(90deg, #1f6feb 0%, #6a5acd 50%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.title-logo {
+  height: 1.15em;
+  width: auto;
+  vertical-align: -0.18em;
+  margin-right: 0.05em;
+  /* Blend the white background of the logo into the page */
+  mix-blend-mode: multiply;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.title-sep {
+  font-weight: 800;
+  margin-left: -0.1em;
+}
+
+@media (max-width: 768px) {
+  .title-logo {
+    height: 0.95em;
+    display: block;
+    margin: 0 auto 0.4rem auto;
+  }
+  .title-sep {
+    display: none;
+  }
+}
+
+.publication-authors {
+  font-size: 1.05rem;
+  margin-top: 0.5rem;
+}
+
+.publication-authors a {
+  color: #1f6feb;
+  text-decoration: none;
+}
+
+.publication-authors a:hover {
+  text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+  margin-right: 0.6rem;
+}
+
+.affiliations {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+/* ---------- Link Buttons ---------- */
+
+.publication-links {
+  margin-top: 1.5rem;
+}
+
+.publication-links .link-block {
+  display: inline-block;
+  margin: 0.3rem;
+}
+
+.publication-links .button {
+  background-color: #1b1f24;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 1.25rem;
+  font-weight: 500;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.publication-links .button:hover {
+  background-color: #2f3640;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.publication-links .button.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.publication-links .button .icon {
+  margin-right: 0.35rem;
+}
+
+/* ---------- Highlights / TL;DR Cards ---------- */
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.highlights-grid.highlights-3 {
+  max-width: 780px;
+  margin: 2rem auto;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.highlight-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 1.3rem 1rem;
+  text-align: center;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.highlight-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(31, 111, 235, 0.12);
+}
+
+.highlight-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  font-family: 'Google Sans', sans-serif;
+  line-height: 1.1;
+}
+
+.highlight-label {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+/* ---------- Section Headings ---------- */
+
+.section {
+  padding: 3rem 1.5rem;
+}
+
+.section:nth-child(even) {
+  background-color: #fafbfd;
+}
+
+.section-title {
+  font-size: 2rem !important;
+  font-weight: 800 !important;
+  text-align: center;
+  margin-bottom: 0.4rem !important;
+  color: #1b1f24;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.content p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #25292e;
+  text-align: justify;
+}
+
+/* ---------- Videos ---------- */
+
+.video-card {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+
+.video-card video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+}
+
+/* Reserve space only for gallery cards (square-ish grid items) so they don't
+   collapse before metadata loads. Full-width / comparison / ablation videos
+   keep their native aspect-ratio to avoid letterbox black bars. */
+.gallery-grid .video-card video {
+  aspect-ratio: 16 / 9;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.ablation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .ablation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.full-width-video {
+  max-width: 960px;
+  margin: 0 auto 1.2rem auto;
+}
+
+/* ---------- Teaser Carousel ---------- */
+
+.carousel {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+.carousel-track {
+  position: relative;
+  width: 100%;
+  /* Keep a stable aspect ratio matching the 2K videos (2560:1408) */
+  aspect-ratio: 2560 / 1408;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  pointer-events: none;
+}
+
+.carousel-slide.is-active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.carousel-slide.is-leaving {
+  opacity: 0;
+  transform: translateX(-30px);
+  z-index: 1;
+}
+
+.carousel-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Arrow buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  z-index: 5;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.carousel-btn:hover {
+  background: rgba(31, 111, 235, 0.85);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.carousel-prev { left: 14px; }
+.carousel-next { right: 14px; }
+
+/* Dots */
+.carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  z-index: 5;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-dot.is-active {
+  background: #fff;
+  transform: scale(1.25);
+}
+
+/* Fade hints on the edges */
+.carousel::before,
+.carousel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.carousel::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), transparent);
+}
+
+.carousel::after {
+  right: 0;
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.35), transparent);
+}
+
+/* ---------- Method ---------- */
+
+.method-figure-img {
+  max-width: 100%;
+  margin: 0 auto 2rem auto;
+  background: white;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.method-figure-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.method-figure-img figcaption {
+  margin-top: 0.9rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  text-align: left;
+  line-height: 1.6;
+}
+
+.method-split {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.method-split-figure {
+  background: white;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.method-split-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.method-split-caption {
+  margin-top: 0.7rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.method-split-text .title {
+  margin-bottom: 0.6rem;
+  color: #1b1f24;
+}
+
+@media (max-width: 880px) {
+  .method-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- BibTeX ---------- */
+
+#bibtex pre {
+  background-color: #0d1117;
+  color: #e6edf3;
+  padding: 1.25rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  overflow-x: auto;
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+  padding: 2rem 1.5rem;
+  background: #1b1f24;
+  color: #c9d1d9;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: #58a6ff;
+}
+
+/* ---------- Responsive tweaks ---------- */
+
+@media (max-width: 768px) {
+  .publication-title {
+    font-size: 1.9rem !important;
+  }
+  .section {
+    padding: 2rem 1rem;
+  }
+  .highlights-grid.highlights-3 {
+    grid-template-columns: 1fr;
+  }
+  .carousel-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
