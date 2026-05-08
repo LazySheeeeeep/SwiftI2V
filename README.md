@@ -13,7 +13,7 @@
 <p>
 
 [![arXiv](https://img.shields.io/badge/arXiv-2605.06356-b31b1b.svg?style=flat-square)](https://arxiv.org/abs/2605.06356)
-[![Project Page](https://img.shields.io/badge/Project-Page-blue?style=flat-square)](https://lazysheeeeeep.github.io/SwiftI2V/)
+[![Project Page](https://img.shields.io/badge/Project-Page-blue?style=flat-square)](https://hkust-longgroup.github.io/SwiftI2V/)
 
 </p>
 
@@ -28,7 +28,7 @@
 ## 📢 News
 
 - **[2026-05]** 📄 arXiv preprint released: [arXiv:2605.06356](https://arxiv.org/abs/2605.06356)
-- **[2026-05]** 🌐 Project page online: [lazysheeeeeep.github.io/SwiftI2V](https://lazysheeeeeep.github.io/SwiftI2V/)
+- **[2026-05]** 🌐 Project page online: [hkust-longgroup.github.io/SwiftI2V](https://hkust-longgroup.github.io/SwiftI2V/)
 - Code and checkpoints will be released in this repository &mdash; stay tuned!
 
 ## ✨ Highlights
@@ -66,7 +66,7 @@ On VBench-I2V at 2K, SwiftI2V matches strong end-to-end baselines on key I2V met
 
 ## 🎥 Demo
 
-For the full gallery, qualitative comparisons, ablations, and RTX 4090 results, please visit our **[Project Page](https://lazysheeeeeep.github.io/SwiftI2V/)**.
+For the full gallery, qualitative comparisons, ablations, and RTX 4090 results, please visit our **[Project Page](https://hkust-longgroup.github.io/SwiftI2V/)**.
 
 ## 📋 TODO
 
