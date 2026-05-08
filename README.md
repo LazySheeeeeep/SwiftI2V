@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./static/images/LOGO.png" alt="SwiftI2V" width="180"/>
+<img src="./static/images/LOGO.png" alt="SwiftI2V" width="320"/>
 
 <h1>Efficient High-Resolution Image-to-Video Generation<br/>via Conditional Segment-wise Generation</h1>
 
@@ -70,8 +70,8 @@ For the full gallery, qualitative comparisons, ablations, and RTX 4090 results, 
 
 ## 📋 TODO
 
-- [✅️] Release project page
-- [✅️] Release arXiv paper
+- ✅️ Release project page
+- ✅️ Release arXiv paper
 - [ ] Release inference code
 - [ ] Release Stage I / Stage II checkpoints
 
